@@ -1,14 +1,8 @@
 #include "redis_queue.h"
-#include <cstdlib>
 #include <iostream>
 
 RedisQueue::RedisQueue(const std::string &host, int port) {
-  const char *redis_host =
-      host.empty() ? std::getenv("REDIS_HOST") : host.c_str();
-  if (!redis_host) 
-    redis_host = "localhost";
-  
-    context_ = redisConnect(redis_host, port);
+  context_ = redisConnect(host.c_str(), port);
   if (context_ == nullptr || context_->err) {
     if (context_) {
       throw std::runtime_error("Redis connection error: " +
