@@ -1,22 +1,18 @@
 #include "redis_queue.h"
 #include <iostream>
+#include "config.h"
+#include <stdexcept>
 
-RedisQueue::RedisQueue(const std::string &host, int port) {
-  context_ = redisConnect(host.c_str(), port);
-  if (context_ == nullptr || context_->err) {
-    if (context_) {
-      throw std::runtime_error("Redis connection error: " +
-                               std::string(context_->errstr));
-    } else {
-      throw std::runtime_error("Can't allocate redis context");
+RedisQueue::RedisQueue(const std::string& host, int port) {
+    context_ = redisConnect(host.c_str(), port);
+    if (context_ == nullptr || context_->err) {
+        throw std::runtime_error("Redis connection error: " + 
+            std::string(context_ ? context_->errstr : "Can't allocate context"));
     }
-  }
 }
 
-RedisQueue::~RedisQueue() {
-  if (context_) {
-    redisFree(context_);
-  }
+RedisQueue RedisQueue::createFromConfig() {
+    return RedisQueue(RedisConfig::getHost(), RedisConfig::getPort());
 }
 
 void RedisQueue::push(const std::filesystem::path &file_path) {
