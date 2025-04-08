@@ -1,16 +1,21 @@
 #include "config.h"
 #include <cstdlib>
+#include <stdexcept>
+
+std::string RedisConfig::getEnvOrDefault(const char* env_var, const std::string& default_value) {
+    const char* val = std::getenv(env_var);
+    return val ? val : default_value;
+}
+
+int RedisConfig::getEnvOrDefault(const char* env_var, int default_value) {
+    const char* val = std::getenv(env_var);
+    return val ? std::stoi(val) : default_value;
+}
 
 std::string RedisConfig::getHost() {
-  if (const char *host = std::getenv("REDIS_HOST")) {
-    return host;
-  }
-  return "localhost";
+    return getEnvOrDefault("REDIS_HOST", "localhost");
 }
 
 int RedisConfig::getPort() {
-  if (const char *port = std::getenv("REDIS_PORT")) {
-    return std::stoi(port);
-  }
-  return 6379;
+    return getEnvOrDefault("REDIS_PORT", 6379);
 }
