@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
   }
 
   try {
-    RedisQueue queue = RedisQueue::createFromConfig(); // Укажите ваш Redis host
+    RedisQueue queue = RedisQueue::createFromConfig();
 
     for (const auto &entry : fs::recursive_directory_iterator(dir_path)) {
       if (entry.is_regular_file()) {
