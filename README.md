@@ -20,7 +20,7 @@ cmake --build .
 Usage:
 
 ## Producer
-./producer <outpur_dir>
+./consumer <outpur_dir>
 
 ## Consumer
-./consumer <input_dir>
+./producer <input_dir>
