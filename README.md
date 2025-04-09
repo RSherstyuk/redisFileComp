@@ -18,5 +18,9 @@ cmake --build .
 ```
 
 Usage:
-Producer: ./producer <outpur_dir>
+
+##Producer
+./producer <outpur_dir>
+
+##Consumer
 Consumer: ./consumer <input_dir>
